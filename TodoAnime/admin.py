@@ -1,3 +1,4 @@
 from django.contrib import admin
+from TodoAnime.models import Otaku
 
-# Register your models here.
+admin.site.register(Otaku)
