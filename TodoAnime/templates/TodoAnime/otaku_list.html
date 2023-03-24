@@ -1,0 +1,16 @@
+{% extends "TodoAnime/base.html" %}
+
+{% load static %}
+
+{% block principal %}
+
+<ul>
+    {% for post in object_list %}
+    <li> {{post.id}} - {{post.Nombre_anime}} - {{post.Tipo_anime}}
+        <a href="">Detalle</a> 
+        <a href="">Actualizar</a>
+        <a href="">Borrar</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
