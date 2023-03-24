@@ -1,0 +1,13 @@
+{% extends "TodoAnime/base.html" %}
+
+{% load static %}
+
+{% block principal %}
+<ul>
+    <li> {{object.id}} - {{object.Nombre_anime}} - {{object.Tipo_anime}}
+        <a href="">Actualizar</a>
+        <a href="">Borrar</a>
+    </li>
+</ul>
+
+{% endblock %}

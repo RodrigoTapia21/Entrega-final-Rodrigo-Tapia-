@@ -15,11 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from TodoAnime.views import index, OtakuList
+from TodoAnime.views import index, OtakuList, OtakuDetail, OtakuUpdate, OtakuDelete, OtakuCreate, OtakuSearch
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name = 'index'),
-    path('otaku/list', OtakuList.as_view(), name='otaku-list')
+    path('otaku/list', OtakuList.as_view(), name='otaku-list'),
+    path('otaku/detail/<pk>', OtakuDetail.as_view(), name='otaku-detail'),
+    path('otaku/update/<pk>', OtakuUpdate.as_view(), name='otaku-update'),
+    path('otaku/delete/<pk>', OtakuDelete.as_view(), name='otaku-delete'),
+    path('otaku/create', OtakuCreate.as_view(), name='otaku-create'),
+    path('otaku/search', OtakuSearch.as_view(), name='otaku-search'),
 ]
 

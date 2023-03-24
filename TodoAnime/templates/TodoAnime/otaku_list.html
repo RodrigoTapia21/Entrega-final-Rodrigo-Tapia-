@@ -5,11 +5,11 @@
 {% block principal %}
 
 <ul>
-    {% for post in object_list %}
+    {% for post in otakus %}
     <li> {{post.id}} - {{post.Nombre_anime}} - {{post.Tipo_anime}}
-        <a href="">Detalle</a> 
-        <a href="">Actualizar</a>
-        <a href="">Borrar</a>
+        <a href="{% url 'otaku-detail' post.id %}">Detalle</a> 
+        <a href="{% url 'otaku-update' post.id %}">Actualizar</a>
+        <a href="{% url 'otaku-delete' post.id %}">Borrar</a>
     </li>
     {% endfor %}
 </ul>
