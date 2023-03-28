@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 def index(request):
     return render(request, 'TodoAnime/index.html')
@@ -14,16 +14,28 @@ class OtakuList(ListView):
     model = Otaku
     context_object_name = 'otakus'
     
+class OtakuMineList(LoginRequiredMixin, OtakuList):
+    
+    def get_queryset(self):
+        return Otaku.objects.filter(publisher=self.request.user.id).all()
+
+        
 class OtakuDetail(DetailView):
     model = Otaku
     context_object_name = 'otaku'
     
-class OtakuUpdate(LoginRequiredMixin, UpdateView):
+class PermissionOnlyOwner(UserPassesTestMixin):
+    def test_func(self):
+        user_id = self.request.user.id
+        otaku_id = self.kwargs.get("pk")
+        return Otaku.objects.filter(publisher=user_id, id= otaku_id).exists()
+    
+class OtakuUpdate(LoginRequiredMixin, PermissionOnlyOwner, UpdateView):
     model = Otaku
     success_url = reverse_lazy('otaku-list')
     fields = '__all__'
     
-class OtakuDelete(LoginRequiredMixin, DeleteView):
+class OtakuDelete(LoginRequiredMixin, PermissionOnlyOwner, DeleteView):
     model = Otaku
     success_url = reverse_lazy('otaku-list')
     context_object_name = 'otaku'

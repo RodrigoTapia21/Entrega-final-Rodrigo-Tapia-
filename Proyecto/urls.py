@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from TodoAnime.views import (index, OtakuList, OtakuDetail, OtakuUpdate, OtakuDelete, OtakuCreate, OtakuSearch,
-                             Login, SingUp, Logout
+                             Login, SingUp, Logout, OtakuMineList
 )
 
 urlpatterns = [
@@ -31,5 +31,7 @@ urlpatterns = [
     path('login/', Login.as_view(), name='login'),
     path('singup/', SingUp.as_view(), name='singup'),
     path('logout/', Logout.as_view(), name='logout'),
+    path('otaku/mine/list', OtakuMineList.as_view(), name='mine-list'),
 ]
+
 
