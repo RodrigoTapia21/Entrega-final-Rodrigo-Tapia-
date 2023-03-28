@@ -3,11 +3,12 @@
 {% load static %}
 
 {% block principal %}
-<ul>
-    <li> {{object.id}} - {{object.Nombre_anime}} - {{object.Tipo_anime}}
-        <a href="">Actualizar</a>
-        <a href="">Borrar</a>
-    </li>
-</ul>
+<div class="d-flex justify-content-center">
+    <div class="col col-8" style="text-align: center;">
+        <h3 class="mt-5">{{ object.Nombre_anime }}</h3>
+        <p><img height="256px" src="{{object.image_url}}"></p>
+        <p class="lead">{{ object.Descripcion}}</p>
+    </div>
+  </div>
 
 {% endblock %}

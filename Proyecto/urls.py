@@ -18,6 +18,8 @@ from django.urls import path
 from TodoAnime.views import (index, OtakuList, OtakuDetail, OtakuUpdate, OtakuDelete, OtakuCreate, OtakuSearch,
                              Login, SingUp, Logout, OtakuMineList
 )
+from django.conf import settings 
+from django.conf.urls.static import static 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -34,4 +36,4 @@ urlpatterns = [
     path('otaku/mine/list', OtakuMineList.as_view(), name='mine-list'),
 ]
 
-
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
