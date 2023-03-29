@@ -70,6 +70,15 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'otaku-create' %}">Add Anime</a>
             </li>
+            {% if user.perfil %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url "perfil-update" user.perfil.id %}">Profile</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'perfil-create' %}">Create Profile</a>
+            </li>
+            {% endif %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'logout' %}">{{ user.username }} | OUT </a>
             </li>

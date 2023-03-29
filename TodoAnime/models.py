@@ -16,3 +16,10 @@ class Otaku(models.Model):
     
     def __str__(self):
         return f"{self.id} - {self.Nombre_anime} - {self.publisher.username}"
+    
+    
+class Perfil(models.Model):
+    user = models.OneToOneField(to=User, on_delete=models.CASCADE, related_name="perfil")
+    redes_sociales = models.CharField(max_length=50)
+    avatar = models.ImageField(upload_to="avatares", null=True, blank=True)
+    
