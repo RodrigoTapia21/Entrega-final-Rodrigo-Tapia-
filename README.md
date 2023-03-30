@@ -69,6 +69,7 @@ urlpatterns = [
 
 - Corremos ***Python manage.py runserver***
 - Como se tiene que ver si esta todo bien:
+
 [![](https://kbimages.dreamhosters.com/images/2018-04_django-create-project.png)](http://https://kbimages.dreamhosters.com/images/2018-04_django-create-project.png)
 
 ------------
