@@ -16,7 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from TodoAnime.views import (index, OtakuList, OtakuDetail, OtakuUpdate, OtakuDelete, OtakuCreate, OtakuSearch,
-                             Login, SingUp, Logout, OtakuMineList, PerfilCreate, PerfilUpDate
+                             Login, SingUp, Logout, OtakuMineList, PerfilCreate, PerfilUpDate, MensajeList, 
+                             MensajeCreate, MensajeDelete, SobreMi
 )
 from django.conf import settings 
 from django.conf.urls.static import static 
@@ -36,6 +37,12 @@ urlpatterns = [
     path('otaku/mine/list', OtakuMineList.as_view(), name='mine-list'),
     path('perfil/create', PerfilCreate.as_view(), name='perfil-create'),
     path('perfil/update/<pk>', PerfilUpDate.as_view(), name='perfil-update'),
+    path('mensaje/create', MensajeCreate.as_view(), name='mensaje-create'),
+    path('mensaje/list', MensajeList.as_view(), name='mensaje-list'),
+    path('mensaje/delete/<pk>', MensajeDelete.as_view(), name='mensaje-delete'),
+    path('Sobre/mi', SobreMi, name = 'sobre-mi'),
+    
+    
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

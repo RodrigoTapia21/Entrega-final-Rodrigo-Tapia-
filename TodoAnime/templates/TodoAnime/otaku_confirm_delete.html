@@ -3,12 +3,15 @@
 {% load static %}
 
 {% block principal %}
-<p style="margin-top: 10px;">Estas seguro que quiere borrar el post {{ otaku.Nombre_anime }}? </p>
+<div class="alert alert-warning" role="alert">
+    ¿Estas seguro que quiere borrar el post {{ otaku.Nombre_anime }}?
+</div>
+
 <form method="post">
     {% csrf_token %}
     {{form}}
     <input class="btn btn-danger" type="submit" value="Borrar">
-    <a class="btn btn-primary" href="{% url 'otaku-list' %}">Cancelar</a>
+    <a type="button" class="btn btn-success" href="{% url 'otaku-list' %}">Cancelar</a>
 </form>
 
 {% endblock %}

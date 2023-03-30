@@ -1,6 +1,5 @@
 from django.shortcuts import render
-from TodoAnime.models import Otaku, Perfil
-from TodoAnime.forms import OtakuForm
+from TodoAnime.models import Otaku, Perfil, Mensaje
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.views import LoginView, LogoutView
@@ -8,7 +7,13 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 def index(request):
-    return render(request, 'TodoAnime/index.html')
+    otakus =  Otaku.objects.all()[:6]
+    return render(request, "TodoAnime/index.html", {"otakus": otakus})
+
+def SobreMi(request):
+    return render(request, "TodoAnime/sobre_mi.html")
+
+#########################################################################################   
 
 class OtakuList(ListView):
     model = Otaku
@@ -54,6 +59,9 @@ class OtakuSearch(ListView):
         resultado = Otaku.objects.filter(Nombre_anime__icontains=criterio).all()
         return resultado
 
+
+#########################################################################################   
+
 class Login(LoginView):
     next_page = reverse_lazy('otaku-list')
     
@@ -73,11 +81,47 @@ class PerfilCreate(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user 
         return super().form_valid(form)
+
+#########################################################################################   
+
+class ProfileCreate(LoginRequiredMixin, CreateView):
+    model = Perfil
+    success_url = reverse_lazy("post-list")
+    fields = ['avatar',]
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
     
 class PerfilUpDate(UserPassesTestMixin, UpdateView):
     model = Perfil
     success_url = reverse_lazy('otaku-list')
-    fields = ['avatar']
+    fields = ['avatar','redes_sociales', 'user']
     
     def test_func(self):
         return Perfil.objects.filter(user=self.request.user).exists()
+    
+    
+#########################################################################################   
+    
+class MensajeCreate(CreateView):
+    model = Mensaje
+    success_url = reverse_lazy('mensaje-create')
+    fields = '__all__'
+    
+class MensajeDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Mensaje
+    context_object_name = "mensaje"
+    success_url = reverse_lazy("mensaje-list")
+
+    def test_func(self):
+        return Mensaje.objects.filter(destinatario=self.request.user).exists()
+    
+class MensajeList(LoginRequiredMixin, ListView):
+    model = Mensaje
+    context_object_name = "mensajes"
+
+    def get_queryset(self):
+        import pdb; pdb.set_trace
+        return Mensaje.objects.filter(destinatario=self.request.user).all()
+    

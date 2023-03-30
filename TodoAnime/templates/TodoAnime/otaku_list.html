@@ -5,14 +5,28 @@
 {% block principal %}
 
 <ul>
+
+    {% if not otakus%}
+    <h3> NO HAY NADA CARGADO </h3>
+    {% endif %}
+
     {% for post in otakus %}
-    <li> {{post.id}} - {{post.Nombre_anime}} - {{post.Tipo_anime}}
-        <a href="{% url 'otaku-detail' post.id %}">Detalle</a> 
-        {% if user.is_authenticated and user.id == post.publisher.id %}
-        <a href="{% url 'otaku-update' post.id %}">Actualizar</a>
-        <a href="{% url 'otaku-delete' post.id %}">Borrar</a>
-        {% endif %}
-    </li>
-    {% endfor %}
+    <div class="row g-0 bg-body-secondary position-relative">
+        <div class="col-md-6 mb-md-0 p-md-4">
+          <img src="{{post.image_url}}" class="w-100" alt="...">
+        </div>
+        <div class="col-md-6 p-4 ps-md-0">
+          <h5 class="mt-0">{{post.id}} - {{post.Nombre_anime}} - {{post.Tipo_anime}}</h5>
+          <p class="lead">{{post.Descripcion}}</p>
+          <a type="button" class="btn btn-success" href="{% url 'otaku-detail' post.id %}">Detalle</a> 
+            {% if user.is_authenticated and user.id == post.publisher.id %}
+            <a type="button" class="btn btn-primary" href="{% url 'otaku-update' post.id %}">Actualizar</a>
+            <a type="button" class="btn btn-danger" href="{% url 'otaku-delete' post.id %}">Borrar</a>
+            {% endif %}
+        </div>
+      </div>
+      {% endfor %}  
+
 </ul>
+
 {% endblock %}
